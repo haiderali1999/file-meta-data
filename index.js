@@ -19,11 +19,11 @@ var app = express();
 app.use(cors());
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use('/public', express.static(process.cwd() + '/public'));
+app.use('/public', express.static(__dirname + '/public'));
 // app.use('/uploads', express.static(process.cwd() + '/uploads'));
 
 app.get('/', function (req, res) {
-  res.sendFile(process.cwd() + '/views/index.html');
+  res.sendFile(__dirname + '/views/index.html');
 });
 
 app.post("/api/fileanalyse", upload.single("upfile"), (req, res) => {
