@@ -2,17 +2,18 @@ var express = require('express');
 var cors = require('cors');
 require('dotenv').config()
 const multer = require("multer");
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/')
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    cb(null, file.fieldname + '-' + uniqueSuffix)
-  }
-})
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, 'uploads/')
+//   },
+//   filename: function (req, file, cb) {
+//     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+//     cb(null, file.fieldname + '-' + uniqueSuffix)
+//   }
+// })
 
-const upload = multer({ storage: storage })
+const upload = multer()
+// const upload = multer({ storage: storage })
 
 var app = express();
 
@@ -27,8 +28,6 @@ app.get('/', function (req, res) {
 });
 
 app.post("/api/fileanalyse", upload.single("upfile"), (req, res) => {
-  debugger
-  console.log(req.file)
   const { originalname, mimetype, size } = req.file
   res.json({ name: originalname, type: mimetype, size })
 })
